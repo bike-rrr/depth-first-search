@@ -6,9 +6,9 @@ class Square {
         this.y = y;
     }
 }
+const grid = [];
 const open = true;
 const closed = false;
-const grid = [];
 const colorsList = [  // STARTING FROM BOTTOM LEFT
     [open, open, open, open, closed, closed, open, open, open, open, open, open],
     [closed, closed, closed, open, closed, closed, open, closed, closed, closed, closed, closed],
@@ -33,22 +33,30 @@ for (let i = 0; i <= 6; i++){
 // check each move we have at each spot
 for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < 12; j++) {
-        for (let k = -1; k<=1; k+= 2) {
-            // check left or right
-            if (j + k >= 0 && j + k <= 11) {
-                console.log(`${i}-${j}: adjecent spot ${i}-${j+k} is ${grid[i][j+k].open}`)
-            } else {
-                console.log(`${i}-${j}: adjecent spot ${i}-${j+k} is NOT OPEN`)
+            // check for LEFT spot OPEN
+            if (j - 1 >= 0) {
+                if (grid[i][j - 1].open) {
+                    console.log(`${i}-${j}: spot ${i}-${j -1} on the LEFT is OPEN`)
+                }
             }
-        }
-        for (let l = -1; l <=1; l+=2) {
-            // check up or down
-            if (i+l >= 0 && i+l <= 6) {
-                console.log(`${i}-${j}: above or below spot  ${i}-${j+l} is ${grid[i+l][j].open} `)
-            } else {
-                console.log(`${i}-${j}: above or below spot  ${i}-${j+l} is NOT OPEN`)
+            // check for RIGHT spot OPEN
+            if (j + 1 <= 11) {
+                if (grid[i][j+1].open) {
+                    console.log(`${i}-${j}: spot ${i}-${j + 1} on the RIGHT is OPEN`)
+                }
             }
-        }
+            // check for BELOW spot OPEN
+            if (i - 1 >= 0 ) {
+                if (grid[i - 1][j].open) {
+                    console.log(`${i}-${j}: spot ${i - 1}-${j} BELOW is OPEN`)
+                }
+            }
+            // chekc for ABOVE spot OPEN
+            if(i+1 <= 6) {
+                if (grid[i + 1][j].open){
+                    console.log(`${i}-${j}: spot ${i + 1}-${j} ABOVE is OPEN`)
+                }
+            } 
     }
 }
 
