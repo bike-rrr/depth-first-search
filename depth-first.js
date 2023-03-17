@@ -84,7 +84,7 @@ for (let i = 0; i < grid.length; i++) {
 
 
 const start = [0,0];
-const end = [6, 11];
+const end = [6, 31];
 let found = false;
 
 function go(spot) {
@@ -113,4 +113,7 @@ function go(spot) {
         go(moves.spots[moves.spots.findIndex(spot => spot.coord[0] === option.coord[0] && spot.coord[1] === option.coord[1])]);
     })
 }
+
+// Start Maze Search
 go(moves.spots[0])
+if (!found){console.log("not found")}
