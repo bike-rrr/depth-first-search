@@ -1,6 +1,6 @@
 class Square {
-    constructor(y,x) {
-        this.y = y;
+    constructor([y, x]) {
+        this.y = y
         this.x = x;
         this.options = [];
         this.tried = true;
@@ -20,18 +20,19 @@ const colorsList = [
 ]
 
 // triedSpotList= []
-const start = [6,0];
+const start = [6, 0];
 const end = [0, 11];
 const triedSquares = [];
 const optionList = [];
 // RUN MAZE
-search(6, 0)
-
-function search(y,x) {
+let count = 0;
+search([6, 0])
+function search([y, x]) {
+    console.log(count++);
     // mark spot off
-    triedSquares.push([y,x]);
+    triedSquares.push([y, x]);
 
-    const square = new Square(y,x);
+    const square = new Square([y, x]);
 
     // are we at end?
     if (foundEnd(square)) {
@@ -41,24 +42,25 @@ function search(y,x) {
 
     // how many options?
     const options = findOptions(square.y, square.x)
-    // console.log(optionList)
+    console.log([y, x], " -> ", optionList)
 
-    // if only one option?
     if (optionList.length === 0){
         console.log("we have no options")
         return;
     }
+    // if only one option?
     else if (optionList.length === 1){
         console.log("onely one move bucko")
-        const [nextY, nextX] = optionList.pop();
-        search(nextY, nextX);
+        search(optionList.pop());
         return;
     }
+    // if we have multiple options?
     if (optionList.length > 1) {
         console.log("more options")
+        // console.log(optionList);
+        // triedSquares.push([y, x]);
+        search(optionList.pop());
     }
-    console.log(optionList);
-        // search(option.pop())
 }
 
 function foundEnd(sqr) {
@@ -90,6 +92,7 @@ function findOptions(y, x) {
 }
 
 function spotTried(y,x) {
+    // console.log('tried list: ', triedSquares)
     let tried = false;
     triedSquares.forEach(coord => {
       if(coord[0] === y && coord[1] === x) {
