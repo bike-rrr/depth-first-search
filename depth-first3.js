@@ -23,9 +23,9 @@ const colorsList = [
 const start = [6,0];
 const end = [0, 11];
 const triedSquares = [];
-
+const optionList = [];
 // RUN MAZE
-search(1, 0)
+search(6, 0)
 
 function search(y,x) {
     // mark spot off
@@ -41,7 +41,24 @@ function search(y,x) {
 
     // how many options?
     const options = findOptions(square.y, square.x)
-    console.log(options.length);
+    // console.log(optionList)
+
+    // if only one option?
+    if (optionList.length === 0){
+        console.log("we have no options")
+        return;
+    }
+    else if (optionList.length === 1){
+        console.log("onely one move bucko")
+        const [nextY, nextX] = optionList.pop();
+        search(nextY, nextX);
+        return;
+    }
+    if (optionList.length > 1) {
+        console.log("more options")
+    }
+    console.log(optionList);
+        // search(option.pop())
 }
 
 function foundEnd(sqr) {
@@ -69,7 +86,7 @@ function findOptions(y, x) {
             }
         }
     }
-    return list;
+    return list.forEach(option => optionList.push(option))
 }
 
 function spotTried(y,x) {
