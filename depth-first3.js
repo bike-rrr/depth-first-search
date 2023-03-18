@@ -25,9 +25,12 @@ const end = [0, 11];
 const triedSquares = [];
 
 // RUN MAZE
-search(6, 10)
+search(1, 0)
 
 function search(y,x) {
+    // mark spot off
+    triedSquares.push([y,x]);
+
     const square = new Square(y,x);
 
     // are we at end?
@@ -38,9 +41,8 @@ function search(y,x) {
 
     // how many options?
     const options = findOptions(square.y, square.x)
-    console.log(options);
+    console.log(options.length);
 }
-
 
 function foundEnd(sqr) {
     return (sqr.y === end[0] && sqr.x === end[1]);
@@ -53,16 +55,31 @@ function findOptions(y, x) {
     // find LEFT or RIGHT
     for (let j = -1; j <= 1; j += 2) {
         if (x + j >= 0 && x + j < rowLen && colorsList[y][x + j] === open) {
-            list.push([y, x + j]);
+            if (!spotTried(y, x + j)) {
+                list.push([y, x + j]);
+            }
+        
         }
     }
     // find TOP or BOTTOM
     for (let i = -1; i <= 1; i += 2) {
         if (y + i >= 0 && y + i < rowHeight && colorsList[y + i][x] === open) {
-            list.push([y + i, x]);
+            if (!spotTried(y + i, x)) {
+                list.push([y + i, x]);
+            }
         }
     }
     return list;
+}
+
+function spotTried(y,x) {
+    let tried = false;
+    triedSquares.forEach(coord => {
+      if(coord[0] === y && coord[1] === x) {
+        tried = true;
+      }
+    })
+    return tried;
 }
 // tridSPotList.push(spot)
 // . are we at END?
