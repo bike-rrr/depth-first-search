@@ -16,7 +16,7 @@ const triedSquares = [];
 const optionList = [];
 
 const start = [6, 0];
-const end = [0, 11];
+const end = [0, 2];
 let count = 0;
 
 // RUN MAZE
@@ -83,10 +83,11 @@ function findOptions([y, x]) {
     if (list.length > 1) {
         console.log("GOTTA CHECK" , [y, x]);
         // console.log("BEFORE LLLLLLIIIIST: ", list);
-       list = greedyFirst(list);
+        list = greedyFirst(list);
         // return list.forEach(option => optionList.push(option))
+        console.log("LIST::::: ", list);
     }
-    // console.log("LLSSSSSSSSSSTEND ", list);
+    console.log("HRE IS THE LIST::  ", list);
     list.forEach(option => optionList.push(option))
 }
 
@@ -102,18 +103,13 @@ function spotTried([y,x]) {
 
 function greedyFirst(opt) {
     console.log("GREDDY BEFORE: ", opt)
-    const ratings = [];
-    console.log("GREEEEEDY AFTER ", opt);
-    let tmp;
-    if (distance(opt[0]) > distance(opt[1])) {
-        ratings.push(opt[0]);
-        ratings.push(opt[1]);
-    } else {
-        ratings.push(opt[1]); 
-       ratings.push(opt[0]);
-    }
-    console.log(ratings, ' ratings')
-    return ratings;
+    opt.sort((a, b) => {
+        let x = distance(a);
+        let y = distance(b);
+         return x > y ? -1 : 1;
+    })
+    return opt;
+
 }
 
 function distance([y, x]) {
