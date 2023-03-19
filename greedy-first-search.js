@@ -16,14 +16,13 @@ const triedSquares = [];
 const optionList = [];
 
 const start = [6, 0];
-const end = [0, 0];
+const end = [2, 2];
 let count = 0;
 
 // RUN MAZE
 search([6, 0])
 
 function search([y, x]) {
-    // console.log("AT SPOT: ", [y, x]);
 
     // mark spot off
     triedSquares.push([y, x]);
@@ -36,7 +35,7 @@ function search([y, x]) {
 
     // how many options?
     findOptions([y, x]);
-    console.log(`count is: #${count++}`, [y, x], " -> ", optionList)
+    console.log(`count is: #${++count}`, [y, x], " -> ", optionList)
 
     if (optionList.length === 0){
         console.log("we have no options")
@@ -50,7 +49,7 @@ function search([y, x]) {
     }
     // if we have multiple options?
     if (optionList.length > 1) {
-        // console.log("more options")
+        console.log("more options")
         search(optionList.pop());
     }
 }
@@ -82,18 +81,17 @@ function findOptions([y, x]) {
     
     // GREDDY FIRST SEARCH
     if (list.length > 1) {
-        console.log("GOTTA CHECK" , [y, x]);
-        console.log("HERES FUCKING LIST #### 1: ", list);
-        // list = greedyFirst(list);
+        // console.log("GOTTA CHECK" , [y, x]);
+        // console.log("HERES FUCKING LIST #### 1: ", list);
         greedyFirst(list);
 
-        console.log("HERES FUCKING LIST #### 3: ", list);
+        // console.log("HERES FUCKING LIST #### 3: ", list);
         // return list.forEach(option => optionList.push(option))
         console.log("LIST::::: ", list);
     }
     
     // add new options to the Main List
-    console.log("HRE IS THE LIST::  ", list);
+    // console.log("HRE IS THE LIST::  ", list);
     list.forEach(option => optionList.push(option))
 }
 
@@ -108,14 +106,14 @@ function spotTried([y,x]) {
 }
 
 function greedyFirst(opt) {
-    console.log("GREDDY BEFORE: ", opt)
+    // console.log("GREDDY BEFORE: ", opt)
     opt.sort((a, b) => {
         let x = distance(a);
         let y = distance(b);
          return x > y ? -1 : 1;
     })
     
-    console.log("HERES FUCKING LIST #### 2: ", opt);
+    // console.log("HERES FUCKING LIST #### 2: ", opt);
     // return opt;
 }
 
