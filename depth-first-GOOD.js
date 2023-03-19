@@ -23,6 +23,7 @@ let count = 0;
 search([6, 0])
 
 function search([y, x]) {
+    console.log("AT SPOT: ", [y, x]);
     // mark spot off
     triedSquares.push([y, x]);
 
@@ -64,7 +65,7 @@ function findOptions([y, x]) {
     // find LEFT or RIGHT
     for (let j = -1; j <= 1; j += 2) {
         if (x + j >= 0 && x + j < rowLen && colorsList[y][x + j] === open) {
-            if (!spotTried(y, x + j)) {
+            if (!spotTried([y, x + j])) {
                 list.push([y, x + j]);
             }
         
@@ -73,16 +74,17 @@ function findOptions([y, x]) {
     // find TOP or BOTTOM
     for (let i = -1; i <= 1; i += 2) {
         if (y + i >= 0 && y + i < rowHeight && colorsList[y + i][x] === open) {
-            if (!spotTried(y + i, x)) {
+            if (!spotTried([y + i, x])) {
                 list.push([y + i, x]);
             }
         }
     }
+    // make list choce go to left 1st(just for cs50 mimic)
+    list.reverse(); // can take off
     return list.forEach(option => optionList.push(option))
 }
 
-function spotTried(y,x) {
-    // console.log('tried list: ', triedSquares)
+function spotTried([y,x]) {
     let tried = false;
     triedSquares.forEach(coord => {
       if(coord[0] === y && coord[1] === x) {
@@ -91,34 +93,3 @@ function spotTried(y,x) {
     })
     return tried;
 }
-// tridSPotList.push(spot)
-// . are we at END?
-    // yes?
-        // END
-    // how many options?
-        // if one?
-            // search(spot)
-        // if > 1?
-            // options.forEach(option => optionsList.push(option))
-
-    // if (!optionsList.length) return
-    // searcc(last option) && remove it from list
-
-
-
-
-
-
-// triedSpotList = []
-// tridSPotList.push(spot)
-// . are we at END?
-    // yes?
-        // END
-    // how many options?
-        // if one?
-            // search(spot)
-        // if > 1?
-            // options.forEach(option => optionsList.push(option))
-
-    // if (!optionsList.length) return
-    // searcc(last option) && remove it from list
