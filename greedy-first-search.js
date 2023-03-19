@@ -16,7 +16,7 @@ const triedSquares = [];
 const optionList = [];
 
 const start = [6, 0];
-const end = [0, 9];
+const end = [0, 11];
 let count = 0;
 
 // RUN MAZE
