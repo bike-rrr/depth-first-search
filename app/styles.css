@@ -4,11 +4,11 @@
     box-sizing: border-box;
 }
 
-
-.container {
-    height: 100vh;
-
+:root {
+    --square-size: 40px;
 }
+
+
 
 .maze-container {
     background-color: blue;
@@ -21,13 +21,16 @@
 
 table {
     background-color: white;
-    border: 1px solid silver;
-    border-collapse: collapse;
+    border: 10px solid lightcyan;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 5px;
 }
 
+
 td {
-    width: 30px;
-    height: 30px;
+    width: var(--square-size);
+    height: var(--square-size);
     text-align: center;
     border: 1px solid silver;
     color: white;
