@@ -35,3 +35,12 @@ td {
     border: 1px solid silver;
     color: white;
 }
+
+.btn-container {
+    margin-top: 10px;
+}
+
+button {
+    border-radius: 5px;
+    padding: 5px;
+}
