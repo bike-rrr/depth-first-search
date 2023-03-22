@@ -1,4 +1,5 @@
-import order from './depth-first-app.js';
+import {breadth as breadthSearch} from './depth-first-app.js';
+import {greedy as orderGreedy} from './greedy-first-app.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     setup();
@@ -27,13 +28,25 @@ function setup(){
     const mazeCoords = getCoordsList(start, end);
 
     // button algo clicks
-    document.querySelector("#breadth").addEventListener("click", () => {
+    document.querySelector("#breadth").addEventListener("click", (e) => {
+            for(let i = 0; i < timeouts.length; i++) {
+                clearTimeout(timeouts[i]);
+            }
+            addColor(cs50);
+            console.log("STRT+++++ ", start)
+            console.log("click orderBREadth is: ", breadthSearch(start, end));
+            animateMoves(mazeCoords,0, breadthSearch(start, end));
+            // document.querySelectorAll("button").forEach(btn => btn.classList.remove("current"));
+            // e.target.classList.add("current");
+        });
+
+    document.querySelector("#greedy").addEventListener("click", (e) => {
         for(let i = 0; i < timeouts.length; i++) {
-            clearTimeout(timeouts[i]);
-        }
-        addColor(cs50);
-        animateMoves(mazeCoords,0);
-    });
+                clearTimeout(timeouts[i]);
+            }
+            addColor(cs50);
+            animateMoves(mazeCoords,0, orderGreedy(start, end)); 
+    })
     
 }
 
@@ -72,26 +85,24 @@ function getCoordsList() {
 
     return squareList;
 }
-
 let speed = 220 - document.querySelector("input").value;
 const range = document.querySelector("input");
 range.addEventListener("input", (e) => speed = 220 - e.target.value)
 
-function animateMoves(mazeCoords, index) {
-
+function animateMoves(mazeCoords, index, orderVersion) {
     timeouts.push(setTimeout(() => {
-        if (index >= order.length) {
+        if (index >= orderVersion.length) {
             return;
         }
 
-        const y = order[index][0];
-        const x = order[index][1];
+        const y = orderVersion[index][0];
+        const x = orderVersion[index][1];
 
         if ((atStart(y, x) || atEnd(y, x))) {
         } else {
             mazeCoords[y][x].style.backgroundColor = 'yellow';
         }
 
-        animateMoves(mazeCoords, ++index);
+        animateMoves(mazeCoords, ++index, orderVersion);
     }, speed));
 }
