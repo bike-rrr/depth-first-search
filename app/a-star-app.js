@@ -18,7 +18,7 @@ function aStar(startSpot, endSpot, maze) {
     
     function search([y, x]) {
         if (found) return;
-        console.log('count: ', ++count, [y, x], optionList);
+        // console.log('count: ', ++count, [y, x], optionList);
         // mark spot off
         triedSquares.push([y, x]);
     

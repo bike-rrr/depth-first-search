@@ -45,7 +45,7 @@ function greedy(startSpot, endSpot, maze) {
             return;
         }
         if (optionList.length > 1) {
-            console.log("more options")
+            console.log ("more options")
             search(optionList.pop());
         }
     }
