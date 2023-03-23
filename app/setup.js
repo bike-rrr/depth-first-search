@@ -1,30 +1,23 @@
 import {breadth as breadthSearch} from './depth-first-app.js';
 import {greedy as orderGreedy} from './greedy-first-app.js';
+import {aStar as aStarSearch} from './a-star-app.js';
+import {mazes} from './mazes.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     setup();
 })
 
-const start = [6, 0];
-const end = [0, 11];
+const start = [5, 5];
+const end = [3, 3];
 
 const timeouts = [];
 function setup(){
     const open = 'open';
     const closed = 'closed';
-
-    const cs50 = [
-        [open, closed, open, closed, open, closed, closed, closed, open, open, closed, open],
-        [open, closed, open, closed, open , open, open, closed, open, closed, closed, open],
-        [open, open, open, closed, open, closed, open , open ,open, closed, closed, open],
-        [closed, open, closed, closed, open, closed, open, closed, open, closed, closed, open],
-        [closed, open, open, open,open, closed, open, closed, open, open, open, open],
-        [closed, closed, closed, open, closed, closed, open, closed, closed, closed, closed, closed],
-        [open, open, open, open, closed, closed, open, open, open, open, open, open],
-    ]
+    const map = mazes.keith;
 
     // populate MAZE
-    addColor(cs50, start, end);
+    addColor(map, start, end);
     const mazeCoords = getCoordsList(start, end);
 
     // button algo clicks
@@ -32,10 +25,10 @@ function setup(){
             for(let i = 0; i < timeouts.length; i++) {
                 clearTimeout(timeouts[i]);
             }
-            addColor(cs50);
+            addColor(map);
             console.log("STRT+++++ ", start)
-            console.log("click orderBREadth is: ", breadthSearch(start, end));
-            animateMoves(mazeCoords,0, breadthSearch(start, end));
+            console.log("click orderBREadth is: ", breadthSearch(start, end, map));
+            animateMoves(mazeCoords,0, breadthSearch(start, end, map));
             // document.querySelectorAll("button").forEach(btn => btn.classList.remove("current"));
             // e.target.classList.add("current");
         });
@@ -44,13 +37,21 @@ function setup(){
         for(let i = 0; i < timeouts.length; i++) {
                 clearTimeout(timeouts[i]);
             }
-            addColor(cs50);
-            animateMoves(mazeCoords,0, orderGreedy(start, end)); 
+            addColor(map);
+            animateMoves(mazeCoords,0, orderGreedy(start, end, map)); 
+    })
+
+       document.querySelector("#aStar").addEventListener("click", (e) => {
+        for(let i = 0; i < timeouts.length; i++) {
+                clearTimeout(timeouts[i]);
+            }
+            addColor(map);
+            animateMoves(mazeCoords,0, aStarSearch(start, end, map)); 
     })
     
 }
 
-function addColor(cs50) {
+function addColor(map) {
     const rows = document.querySelectorAll('tr');
     rows.forEach((row, i) => {
         row.querySelectorAll("td").forEach((cell, j) => {
@@ -59,7 +60,7 @@ function addColor(cs50) {
             } else if (atEnd(i, j)) {
                 cell.style.backgroundColor = 'green';
             } else {
-                cell.style.backgroundColor = cs50[i][j] === 'open' ? 'black' : 'grey';
+                cell.style.backgroundColor = map[i][j] === 'open' ? 'black' : 'grey';
             }
         })
     })

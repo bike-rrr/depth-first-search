@@ -44,3 +44,7 @@ button {
     border-radius: 5px;
     padding: 5px;
 }
+
+.current {
+    text-decoration: underline;
+}

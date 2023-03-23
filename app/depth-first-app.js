@@ -1,29 +1,19 @@
 // SETUP MAZE
 // console.log("working");
 
-function breadth(startSpot, endSpot) {
+function breadth(startSpot, endSpot, maze) {
     const open = "open";
     const closed = "closed";
     const order = [];
-    const colorsList = [
-        [open, closed, open, closed, open, closed, closed, closed, open, open, closed, open],
-        [open, closed, open, closed, open , open, open, closed, open, closed, closed, open],
-        [open, open, open, closed, open, closed, open , open ,open, closed, closed, open],
-        [closed, open, closed, closed, open, closed, open, closed, open, closed, closed, open],
-        [closed, open, open, open,open, closed, open, closed, open, open, open, open],
-        [closed, closed, closed, open, closed, closed, open, closed, closed, closed, closed, closed],
-        [open, open, open, open, closed, closed, open, open, open, open, open, open],
-    ]
     
     const triedSquares = [];
     const optionList = [];
-    
+    const colorsList = maze;
+
     const start = startSpot;
     const end = endSpot;
     let count = 0;
 
-    console.log("START ISS: ", start)
-    
     // RUN MAZE
     search(start);
     

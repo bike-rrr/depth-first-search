@@ -1,59 +1,52 @@
 // SETUP MAZE
-
-function greedy(startSpot, endSpot, maze) {
+function aStar(startSpot, endSpot, maze) {
     const open = "open";
     const closed = "closed";
     
-    const colorsList = maze;
     const triedSquares = [];
     const optionList = [];
-    
-    // main list to be exported
+    const colorsList = maze;
     const order = [];
+    let found = false;
+    let count = 0;
     
     const start = startSpot;
     const end = endSpot;
-    let count = 0;
     
     // RUN MAZE
-    search(start)
+    search(start);
     
     function search([y, x]) {
+        if (found) return;
+        console.log('count: ', ++count, [y, x], optionList);
         // mark spot off
         triedSquares.push([y, x]);
     
-        // add to orderList for animations
+         // add to orderList for animations
         order.push([y, x]);
     
+
         // are we at end?
-        if (foundEnd([y, x])) {
+         if (foundEnd([y, x])) {
             console.log("at END: ", [y, x]);
+            found = true;
             return;
         }
     
-        // how many options?
-        findOptions([y, x]);
-        console.log(`count is: #${++count}`, [y, x], " -> ", optionList)
+        // get list of options
+        const list = findOptions([y, x]);
+        list.forEach(option => {
+            optionList.push(option);
+            triedSquares.push(option);
+        })
     
-        if (optionList.length === 0){
-            console.log("we have no options")
-            return;
-        }
-        else if (optionList.length === 1){
-            console.log("onely one move bucko")
-            search(optionList.pop());
-            return;
-        }
-        if (optionList.length > 1) {
-            console.log("more options")
-            search(optionList.pop());
+        // alternate checking each option
+        for (let i = 0; i < optionList.length; i++) {
+            search(optionList.shift());
         }
     }
     
-    function foundEnd([y, x]) {
-        return (y === end[0] && x === end[1]);
-    }
-    
+    // HELPER FUNCTIONS
     function findOptions([y, x]) {
         let list = [];
         const rowLen = colorsList[0].length;
@@ -75,14 +68,7 @@ function greedy(startSpot, endSpot, maze) {
                 }
             }
         }
-        
-        // GREDDY FIRST SEARCH
-        if (list.length > 1) {
-            greedyFirstPick(list);
-        }
-        
-        // add new options to the Main List
-        list.forEach(option => optionList.push(option));
+        return list;
     }
     
     function spotTried([y,x]) {
@@ -95,20 +81,23 @@ function greedy(startSpot, endSpot, maze) {
         return tried;
     }
     
-    function greedyFirstPick(opt) {
-        opt.sort((a, b) => {
-            let x = distance(a);
-            let y = distance(b);
-             return x > y ? -1 : 1;
-        })
+    function foundEnd([y, x]) {
+    return (y === end[0] && x === end[1]);
     }
-    
-    function distance([y, x]) {
-        return Math.abs(end[0] - y) + Math.abs(end[1] - x)
-    }
+            // search(spot)
+        // if (found) console.log("found")
+            // return
+        // mark spot off 
+        // console.log(spot)
+        // are we at end?
+            // console.log("found", spot)
+        // find options
+            // options.forEach
+                // optList.push(spot)
+        // optionList.forEach(spot)
+            // search(spot)
+return order;
 
-    return order;
 }
 
-
-export {greedy};
+export {aStar};
