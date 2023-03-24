@@ -43,10 +43,10 @@ function greedy(startSpot, endSpot, maze) {
     function search([y, x]) {
         // mark spot off
         triedSquares.push([y, x]);
+        
     
         // add to orderList for animations
         order.push([y, x]);
-        
         // are we at end?
         if (foundEnd([y, x])) {
             console.log("at END: ", [y, x]);
@@ -98,7 +98,7 @@ function greedy(startSpot, endSpot, maze) {
             }
         }
         
-        // GREDDY FIRST SEARCH
+        // // GREDDY FIRST SEARCH
         if (list.length > 1) {
             greedyFirstPick(list);
         }
@@ -112,6 +112,7 @@ function greedy(startSpot, endSpot, maze) {
             tried = true;
           }
         })
+        triedSquares.push([y, x]);
         return tried;
     }
     
