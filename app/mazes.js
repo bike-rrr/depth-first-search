@@ -31,33 +31,58 @@ mazes.keith = {
     end: [3, 3]
 }
 
+mazes.fucked = {
+    map: [
+        [open, open, open, closed, closed, open, open, open, open, closed, open, closed],
+        [open, open, open, open, closed, open, closed, closed, open, open, closed, open],
+        [closed, closed, open, open, closed, open, open, open, open, closed, open, open],
+        [closed, closed, open, open, closed, open, open, closed, open, open, closed, open],
+        [closed, closed, open, open, open, closed, open, open, open, open, open, closed],
+        [open, open, open, closed, open, open, open, open, open, open, open, open],
+        [open, open, closed, open, open, open, open, closed, open, closed, closed, open]
+    ],
+    start: [6, 3],
+    end: [5, 2]
+}
+
+mazes.shit = {
+    map: [
+        [closed, open, open, closed, open, open, open, closed, open, open, open, closed],
+        [closed, open, open, closed, closed, closed, open, open, open, open, closed, open],
+        [open, closed, open, open, closed, closed, closed, open, open, open, closed, open],
+        [open, closed, open, open, open, closed, open, closed, closed, open, open, open],
+        [open, closed, open, open, open, open, open, open, open, open, open, open],
+        [open, closed, closed, closed, closed, open, open, open, open, closed, open, closed],
+        [open, open, closed, closed, open, open, open, open, open, open, closed, open]
+    ],
+    start: [6, 5],
+    end: [0, 5]
+}
+
 function make() {
     const list = [];
+    const openSpots = [];
     for (let i = 0; i < 7; i++){
         let row = [];
         for (let j = 0; j < 12; j++){
             const rand = Math.random();
-            if (rand < .5) {
+            if (rand < .7) {
                 row.push(open);
+                openSpots.push([i, j])
             } else {
                 row.push(closed)
             }
         }
         list.push(row);
     }
-    const spots = [];
+
     const start = [];
     const end = [];
-    for (let i = 0; i < list.length; i++) {
-        for (let j = 0; j < list[0].length; j++) {
-            if (list[i][j] === open) {
-                spots.push([i,j]);
-            }
-        }
-    } 
-    const randStart = spots[Math.floor(Math.random() * spots.length)];
-    spots.slice(randStart);
-    const randEnd = spots[Math.floor(Math.random() * spots.length)]; 
+    let random = Math.floor(Math.random() * openSpots.length);
+    const randStart = openSpots[random];
+    openSpots.splice(random, 1);
+    const randEnd = openSpots[Math.floor(Math.random() * openSpots.length)];
+
     return {map:list, start:randStart, end:randEnd}
 }
 

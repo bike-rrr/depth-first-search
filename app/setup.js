@@ -1,6 +1,6 @@
-import {breadth as breadthSearch} from './depth-first-app.js';
-import {greedy as orderGreedy} from './greedy-first-app.js';
-import {aStar as aStarSearch} from './a-star-app.js';
+import {breadth as breadthSearch} from './algos/depth-first-app.js';
+import {greedy as orderGreedy} from './algos/greedy-first-app.js';
+import {aStar as aStarSearch} from './algos/a-star-app.js';
 import {mazes} from './mazes.js';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -48,6 +48,8 @@ function setup(){
             addColor(map, start, end);
             animateMoves(mazeCoords,0, aStarSearch(start, end, map)); 
     })
+
+
 
     // HELPER FUNCTIONS
     function addColor(map) {
